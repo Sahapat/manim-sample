@@ -2,7 +2,11 @@ from manimlib import *
 from scipy.integrate import odeint
 from scipy.integrate import solve_ivp
 
-def lorenz_system(t, state, sigma=10, rho=28, beta=8 / 3):
+sigma = 14
+rho = 10
+beta = 8 / 3
+
+def lorenz_system(t, state, sigma=sigma, rho=rho, beta=beta):
     x, y, z = state
     dxdt = sigma * (y - x)
     dydt = x * (rho - z) - y
@@ -88,9 +92,9 @@ class LorenzAttractor(InteractiveScene):
 
         curves.set_stroke(width=2, opacity=1)
         python_code = Code(
-            R'''
+            Rf'''
             ode_solution = solve_ivp(
-                lambda: lambda state, sigma=10, rho=28, beta=8/3: [
+                lambda: lambda state, sigma={sigma}, rho={rho}, beta={beta}: [
                     sigma * (state[1] - state[0]),  # dx/dt
                     state[0] * (rho - state[2]) - state[1],  # dy/dt
                     state[0] * state[1] - beta * state[2]  # dz/dt
