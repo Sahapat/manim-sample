@@ -22,7 +22,7 @@ def ode_solution_points(function, state0, time, dt=0.01):
     return solution.y.T
 
 
-class LorenzAttractor(InteractiveScene):
+class LorenzAttractor(Scene):
     def construct(self):
         lorenz_description = Text(
             "The Lorenz system is given by the following set of ordinary differential equations:",
