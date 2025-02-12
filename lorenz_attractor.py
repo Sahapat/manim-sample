@@ -1,5 +1,4 @@
 from manimlib import *
-from scipy.integrate import odeint
 from scipy.integrate import solve_ivp
 
 sigma = 14
@@ -12,7 +11,6 @@ def lorenz_system(t, state, sigma=sigma, rho=rho, beta=beta):
     dydt = x * (rho - z) - y
     dzdt = x * y - beta * z
     return [dxdt, dydt, dzdt]
-
 
 def ode_solution_points(function, state0, time, dt=0.01):
     solution = solve_ivp(
@@ -94,7 +92,7 @@ class LorenzAttractor(InteractiveScene):
         python_code = Code(
             Rf'''
             ode_solution = solve_ivp(
-                lambda: lambda state, sigma={sigma}, rho={rho}, beta={beta}: [
+            lambda: lambda state, sigma={sigma}, rho={rho}, beta={beta}: [
                     sigma * (state[1] - state[0]),  # dx/dt
                     state[0] * (rho - state[2]) - state[1],  # dy/dt
                     state[0] * state[1] - beta * state[2]  # dz/dt
@@ -120,28 +118,3 @@ class LorenzAttractor(InteractiveScene):
         run_time=evolution_time)
 
         self.wait(5)
-
-        # # Display dots moving along those trajectories
-        # dots = Group(GlowDot(color=color, radius=0.25) for color in colors)
-
-        # def update_dots(dots, curves=curves):
-        #     for dot, curve in zip(dots, curves):
-        #         dot.move_to(curve.get_end())
-
-        # dots.add_updater(update_dots)
-
-        # tail = VGroup(
-        #     TracingTail(dot, time_traced=3).match_color(dot)
-        #     for dot in dots
-        # )
-
-        # self.add(dots)
-        # self.add(tail)
-        # curves.set_opacity(0)
-        # self.play(
-        #     *(
-        #         ShowCreation(curve, rate_func=linear)
-        #         for curve in curves
-        #     ),
-        #     run_time=evolution_time,
-        # )
